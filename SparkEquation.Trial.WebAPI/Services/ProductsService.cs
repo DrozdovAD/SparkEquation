@@ -1,11 +1,9 @@
-using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SparkEquation.Trial.WebAPI.Data;
 using SparkEquation.Trial.WebAPI.Data.Factory;
 using SparkEquation.Trial.WebAPI.Data.Models;
 
@@ -16,18 +14,10 @@ namespace SparkEquation.Trial.WebAPI.Services
         private readonly IContextFactory _factory;
         private readonly IMapper _mapper;
 
-        public ProductsService(IContextFactory contextFactory)
+        public ProductsService(IContextFactory contextFactory, IMapper mapper)
         {
             _factory = contextFactory;
-
-            var config = new MapperConfiguration(cfg =>
-                cfg.CreateMap<ProductMessage, Product>()
-                .ForMember(dest => dest.CategoryProducts, opt =>
-                    opt.MapFrom(pm => pm.CategoryIds.Select(id =>
-                        new CategoryProduct() { ProductId = pm.Id, CategoryId = id })))
-            );
-
-            _mapper = config.CreateMapper();
+            _mapper = mapper;
         }
 
         public async Task<List<Product>> GetAllProductsDataAsync()
