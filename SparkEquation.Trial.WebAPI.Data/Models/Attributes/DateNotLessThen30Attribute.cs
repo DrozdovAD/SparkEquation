@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CustomDataAnnotations
 {
-    public class DateNotLessThen30Attribute : ValidationAttribute
+    public class DateNotLessThenAttribute : ValidationAttribute
     {
         public int DateRange {get; set;}
 
-        public DateNotLessThen30Attribute()
+        public DateNotLessThenAttribute()
         {
         }
 
